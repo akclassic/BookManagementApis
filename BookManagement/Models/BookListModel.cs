@@ -6,10 +6,10 @@
         public int BookId { get; set; }
         public string BookName { get; set; }
         public string BookDescription { get; set; }
-        public string BookCategoryName { get; set; }
+        public int BookCategoryId { get; set; }
         public decimal Price { get; set; }
-        public string AuthorName { get; set; }
-        public string PulisherName { get; set; }
+        public int AuthorId { get; set; }
+        public int PulisherId { get; set; }
         public int Quantity { get; set; }
 
     }

@@ -26,9 +26,9 @@ namespace BookManagement.BAL.Implementation
                                     BookDescription = b.BookDescription,
                                     Price = b.Price,
                                     Quantity = b.Quantity,
-                                    AuthorName = b.Author.AuthorName,
-                                    PulisherName = b.Pulisher.PublisherName,
-                                    BookCategoryName = b.BookCategory.Category
+                                    AuthorId = b.Author.Id,
+                                    PulisherId = b.Pulisher.Id,
+                                    BookCategoryId = b.BookCategory.Id
                                 })
                                 .OrderBy(b => b.BookId)
                                 .ToListAsync();
@@ -54,9 +54,9 @@ namespace BookManagement.BAL.Implementation
                                     BookDescription = b.BookDescription,
                                     Price = b.Price,
                                     Quantity = b.Quantity,
-                                    AuthorName = b.Author.AuthorName,
-                                    PulisherName = b.Pulisher.PublisherName,
-                                    BookCategoryName = b.BookCategory.Category
+                                    AuthorId = b.Author.Id,
+                                    PulisherId = b.Pulisher.Id,
+                                    BookCategoryId = b.BookCategory.Id
                                 }).ToListAsync();
 
                 return book[0];
