@@ -2,6 +2,7 @@
 using BookManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BookManagement.Controllers
@@ -45,6 +46,20 @@ namespace BookManagement.Controllers
         public async Task<bool> Delete(int id)
         {
             return await _bookManager.DeleteBookDetail(id);
+        }
+
+        [HttpGet("groupby/{authorid}/{publisherid}")]
+        public async Task<IActionResult> BookByGroup(int authorid, int publisherid)
+        {
+            var result = await _bookManager.GetBookByGroup(authorid, publisherid);
+            if(result != null)
+            {
+                return StatusCode((int)HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return StatusCode((int)HttpStatusCode.NotFound);
+            }
         }
     }
 }

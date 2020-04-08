@@ -17,5 +17,7 @@ namespace BookManagement.BAL.Shared
         public Task<bool> UpdateBookDetail(int id, SingleBookModel singleBookModel);
 
         public Task<bool> DeleteBookDetail(int id);
+
+        public Task<IEnumerable<GroupByBookModel>> GetBookByGroup(int authorid, int publisherid);
     }
 }

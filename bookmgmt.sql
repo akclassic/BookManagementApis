@@ -135,4 +135,59 @@ Go
 
 INSERT INTO Users VALUES('Ankit','ankit@gmail.com','12345');
 
-SELECT * FROM Users
+
+SELECT * FROM Book
+WHERE AuthorId = (Select Id FROM Author WHERE Id = 3) AND PulisherId = (SELECT Id FROM Publisher WHERE Id = 1)
+
+
+SELECT AuthorId, PulisherId, COUNT(BookId) AS [No of Books] FROM Book
+WHERE AuthorId = 3 AND PulisherId = 1
+GROUP BY AuthorId, PulisherId
+
+CREATE TABLE PublisherAuthor(Id INT PRIMARY KEY IDENTITY(1,1), PublisherId INT, AuthorId INT);
+
+ALTER TABLE PublisherAuthor 
+ADD CONSTRAINT FK_Publisher_PublisherAuthor
+FOREIGN KEY (PublisherId) REFERENCES Publisher(Id)
+
+ALTER TABLE PublisherAuthor 
+ADD CONSTRAINT FK_Author_PublisherAuthor
+FOREIGN KEY (AuthorId) REFERENCES Author(Id)
+
+ALTER TABLE PublisherAuthor
+ADD CONSTRAINT UQ_PublisherId_AuthorId
+UNIQUE (PublisherId, AuthorId)
+
+INSERT INTO PublisherAuthor VALUES(1,3);
+INSERT INTO PublisherAuthor VALUES(1,4);
+INSERT INTO PublisherAuthor VALUES(2,4);
+INSERT INTO PublisherAuthor VALUES(2,3);
+INSERT INTO PublisherAuthor VALUES(3,2);
+INSERT INTO PublisherAuthor VALUES(5,1);
+
+SELECT * FROM PublisherAuthor
+
+SELECT * FROM Book
+SELECT * FROM Author
+SELECT * FROM Publisher
+SELECT * FROM PublisherAuthor
+
+SELECT p.Id AS publisherId, a.Id AS AuthorId
+FROM PublisherAuthor pa
+JOIN Publisher p ON pa.PublisherId = p.Id
+JOIN Author a ON pa.AuthorId = a.Id
+--GROUP BY pa.PublisherId
+
+SELECT * 
+FROM Author 
+JOIN Book 
+ON Author.Id = Book.AuthorId
+ORDER BY AuthorId ASC
+--GROUP BY AuthorId, BookName
+
+SELECT p.Id AS publisherId, a.Id AS AuthorId, BookId
+FROM PublisherAuthor pa
+JOIN Publisher p ON pa.PublisherId = p.Id
+JOIN Author a ON pa.AuthorId = a.Id
+JOIN Book b ON a.Id = b.AuthorId
+ORDER BY p.Id, a.Id, BookId

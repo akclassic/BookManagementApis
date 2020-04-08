@@ -1,4 +1,5 @@
-﻿using BookManagement.Models;
+﻿using BookManagement.Entities;
+using BookManagement.Models;
 using System.Linq;
 
 namespace BookManagement.BAL.Implementation

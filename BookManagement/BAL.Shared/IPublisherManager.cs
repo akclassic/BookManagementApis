@@ -9,5 +9,7 @@ namespace BookManagement.BAL.Shared
     public interface IPublisherManager
     {
         public Task<IEnumerable<PublisherListModel>> GetPublisherList();
+
+        public Task<IEnumerable<PublisherAuthorBookModel>> GetPublisherDetails();
     }
 }

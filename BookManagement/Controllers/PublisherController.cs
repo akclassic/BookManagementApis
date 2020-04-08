@@ -29,5 +29,19 @@ namespace BookManagement.Controllers
                 return StatusCode((int)HttpStatusCode.NotFound);
             }
         }
+
+        [HttpGet("publisherdetails")]
+        public async Task<IActionResult> GetPublisherDetails()
+        {
+            var details = await _publisherManager.GetPublisherDetails();
+            if (details != null)
+            {
+                return StatusCode((int)HttpStatusCode.OK, details);
+            }
+            else
+            {
+                return StatusCode((int)HttpStatusCode.NotFound);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BookManagement.BAL.Shared;
+using BookManagement.Entities;
 using BookManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

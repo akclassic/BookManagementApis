@@ -1,7 +1,7 @@
 ﻿using BookManagement.BAL.Shared;
+using BookManagement.Entities;
 using BookManagement.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -128,6 +128,45 @@ namespace BookManagement.BAL.Implementation
             }
 
             return isSuccess;
+        }
+
+        public async Task<IEnumerable<GroupByBookModel>> GetBookByGroup(int authorid, int publisherid)
+        {
+            using (var context = new BookManagementContext())
+            {
+                var books = context.Book
+                           .Where(b => b.AuthorId == authorid && b.PulisherId == publisherid)
+                           .Select(b => new SingleBookModel()
+                           {
+                               Isbn = b.Isbn,
+                               BookId = b.BookId,
+                               BookName = b.BookName,
+                               BookDescription = b.BookDescription,
+                               Price = b.Price,
+                               BookCategoryId = b.BookCategoryId,
+                               Quantity = b.Quantity,
+                               AuthorId = b.AuthorId,
+                               PulisherId = b.PulisherId
+                           }).ToList();
+
+                var bookscount = await context.Book
+                            .Where(b => b.AuthorId == authorid && b.PulisherId == publisherid)
+                            .GroupBy(b => new { b.PulisherId, b.AuthorId })
+                            .Select(g => new GroupByBookModel()
+                            {
+                                AuthorId = g.Key.AuthorId,
+                                PublisherId = g.Key.PulisherId,
+                                NumberOfBooks = g.Count(),
+                                
+                                //BookName = g.AsEnumerable().FirstOrDefault(b => b.AuthorId == g.Key.AuthorId && b.PulisherId == g.Key.PulisherId).BookName
+                                Books = books
+                            })
+                            .ToListAsync();
+
+               
+
+                return bookscount;
+            }
         }
     }
 }

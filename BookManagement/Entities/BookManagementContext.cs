@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BookManagement.Models
+namespace BookManagement.Entities
 {
     public partial class BookManagementContext : DbContext
     {
@@ -19,6 +19,7 @@ namespace BookManagement.Models
         public virtual DbSet<Book> Book { get; set; }
         public virtual DbSet<BookCategory> BookCategory { get; set; }
         public virtual DbSet<Publisher> Publisher { get; set; }
+        public virtual DbSet<PublisherAuthor> PublisherAuthor { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
@@ -49,14 +50,14 @@ namespace BookManagement.Models
             modelBuilder.Entity<Book>(entity =>
             {
                 entity.HasKey(e => e.Isbn)
-                    .HasName("PK__Book__9271CED15DDE2CC7");
+                    .HasName("PK__Book__9271CED1843E0FC7");
 
                 entity.HasIndex(e => e.BookId)
-                    .HasName("UQ__Book__3DE0C206AD5B6C16")
+                    .HasName("UQ__Book__3DE0C20646F27195")
                     .IsUnique();
 
                 entity.Property(e => e.Isbn)
-                    .HasMaxLength(13)
+                    .HasMaxLength(25)
                     .IsUnicode(false);
 
                 entity.Property(e => e.BookDescription)
@@ -105,6 +106,23 @@ namespace BookManagement.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<PublisherAuthor>(entity =>
+            {
+                entity.HasIndex(e => new { e.PublisherId, e.AuthorId })
+                    .HasName("UQ_PublisherId_AuthorId")
+                    .IsUnique();
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.PublisherAuthor)
+                    .HasForeignKey(d => d.AuthorId)
+                    .HasConstraintName("FK_Author_PublisherAuthor");
+
+                entity.HasOne(d => d.Publisher)
+                    .WithMany(p => p.PublisherAuthor)
+                    .HasForeignKey(d => d.PublisherId)
+                    .HasConstraintName("FK_Publisher_PublisherAuthor");
             });
 
             modelBuilder.Entity<Roles>(entity =>
