@@ -63,7 +63,7 @@ namespace BookManagement.BAL.Implementation
             }
         }
 
-        public async Task<bool> SaveBookDetail(SingleBookModel singleBookModel)
+        public async Task<bool> SaveBookDetail(BookModel singleBookModel)
         {
             bool isSuccess = false;
 
@@ -90,7 +90,7 @@ namespace BookManagement.BAL.Implementation
             return isSuccess;
         }
 
-        public async Task<bool> UpdateBookDetail(int id, SingleBookModel singleBookModel)
+        public async Task<bool> UpdateBookDetail(int id, BookModel singleBookModel)
         {
             bool isSuccess = false;
 
@@ -136,7 +136,7 @@ namespace BookManagement.BAL.Implementation
             {
                 var books = context.Book
                            .Where(b => b.AuthorId == authorid && b.PulisherId == publisherid)
-                           .Select(b => new SingleBookModel()
+                           .Select(b => new BookModel()
                            {
                                Isbn = b.Isbn,
                                BookId = b.BookId,

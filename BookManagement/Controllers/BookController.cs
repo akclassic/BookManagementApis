@@ -1,5 +1,6 @@
 ﻿using BookManagement.BAL.Shared;
 using BookManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
@@ -18,6 +19,7 @@ namespace BookManagement.Controllers
             _bookManager = bookManager;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<BookListModel>> Get()
         {
@@ -31,13 +33,13 @@ namespace BookManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<bool> Post([FromBody]SingleBookModel singleBookModel)
+        public async Task<bool> Post([FromBody]BookModel singleBookModel)
         {
             return await _bookManager.SaveBookDetail(singleBookModel);
         }
 
         [HttpPut("{id}")]
-        public async Task<bool> Put(int id, [FromBody]SingleBookModel singleBookModel)
+        public async Task<bool> Put(int id, [FromBody]BookModel singleBookModel)
         {
             return await _bookManager.UpdateBookDetail(id, singleBookModel);
         }

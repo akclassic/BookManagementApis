@@ -4,7 +4,7 @@ namespace BookManagement.Models
 {
     public class PublisherAuthorBookModel
     {
-        public SinglePublisherModel Publisher { get; set; }
+        public PublisherModel Publisher { get; set; }
 
         public IEnumerable<AuthorBookModel> AuthorBook { get; set; }
     }
@@ -14,7 +14,7 @@ namespace BookManagement.Models
         public int Id { get; set; }
         public string AuthorName { get; set; }
         public string Email { get; set; }
-        public IEnumerable<SingleBookModel> Books { get; set; }
+        public IEnumerable<BookModel> Books { get; set; }
     }
 
     

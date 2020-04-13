@@ -17,12 +17,13 @@ namespace BookManagement.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody]UserLoginModel userLoginModel)
+        public IActionResult Login([FromBody]UserModel userLoginModel)
         {
-            bool result = _userManager.Login(userLoginModel);
-            if (result)
-            {
-                return StatusCode((int)HttpStatusCode.OK, result);
+            var result = _userManager.Login(userLoginModel);
+            if (result != null)
+            {  
+                var token = _userManager.GenerateJSONWebToken(result);
+                return StatusCode((int)HttpStatusCode.OK, new { authtoken = token, user = result });
             }
             else
             {

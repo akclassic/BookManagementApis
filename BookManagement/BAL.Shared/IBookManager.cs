@@ -12,9 +12,9 @@ namespace BookManagement.BAL.Shared
 
         public Task<BookListModel> GetSingleBookDetail(int id);
 
-        public Task<bool> SaveBookDetail(SingleBookModel singleBookModel);
+        public Task<bool> SaveBookDetail(BookModel singleBookModel);
 
-        public Task<bool> UpdateBookDetail(int id, SingleBookModel singleBookModel);
+        public Task<bool> UpdateBookDetail(int id, BookModel singleBookModel);
 
         public Task<bool> DeleteBookDetail(int id);
 

@@ -8,6 +8,8 @@ namespace BookManagement.BAL.Implementation
 {
     public interface IUserManager
     {
-        public bool Login(UserLoginModel userLoginModel);
+        public UserModel Login(UserModel userLoginModel);
+
+        public string GenerateJSONWebToken(UserModel user);
     }
 }

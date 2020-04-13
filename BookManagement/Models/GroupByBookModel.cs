@@ -9,6 +9,6 @@ namespace BookManagement.Models
         public int NumberOfBooks { get; set; }
 
         public string BookName { get; set; }
-        public IEnumerable<SingleBookModel> Books { get; set; }
+        public IEnumerable<BookModel> Books { get; set; }
     }
 }

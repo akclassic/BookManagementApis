@@ -38,31 +38,31 @@ namespace BookManagement.BAL.Implementation
                                         })
                                         .ToList();
 
-                return publisherauthors.GroupBy(g => new { g.PublisherId, g.PublisherName })
-                                        .OrderBy(g => g.Key.PublisherId)
-                                        .Select(a => new PublisherAuthorBookModel()
+                return publisherauthors.GroupBy(publisherGroup => new { publisherGroup.PublisherId, publisherGroup.PublisherName })
+                                        .OrderBy(publisherGroup => publisherGroup.Key.PublisherId)
+                                        .Select(publisher => new PublisherAuthorBookModel()
                                         {
-                                            Publisher = new SinglePublisherModel()
+                                            Publisher = new PublisherModel()
                                             {
-                                                Id = a.Key.PublisherId,
-                                                PublisherName = a.Key.PublisherName
+                                                Id = publisher.Key.PublisherId,
+                                                PublisherName = publisher.Key.PublisherName
                                             },
-                                            AuthorBook = a.GroupBy(x => new { x.AuthorId, x.AuthorName })
-                                                        .OrderBy(x => x.Key.AuthorId)
-                                                        .Select(y => new AuthorBookModel()
+                                            AuthorBook = publisher.GroupBy(authorGroup => new { authorGroup.AuthorId, authorGroup.AuthorName })
+                                                        .OrderBy(authorGroup => authorGroup.Key.AuthorId)
+                                                        .Select(author => new AuthorBookModel()
                                                         {
-                                                            Id = y.Key.AuthorId,
-                                                            AuthorName = y.Key.AuthorName,
-                                                            Books = y.Select(z => new SingleBookModel()
+                                                            Id = author.Key.AuthorId,
+                                                            AuthorName = author.Key.AuthorName,
+                                                            Books = author.Select(book => new BookModel()
                                                             {
-                                                                Isbn = z.Isbn,
-                                                                BookId = z.BookId,
-                                                                BookName = z.BookName,
-                                                                BookDescription = z.BookDescription,
-                                                                BookCategoryId = z.BookCategoryId,
-                                                                Quantity = z.BookQuantity,
-                                                                Price = z.BookPrice
-                                                            }).OrderBy(z => z.BookId)
+                                                                Isbn = book.Isbn,
+                                                                BookId = book.BookId,
+                                                                BookName = book.BookName,
+                                                                BookDescription = book.BookDescription,
+                                                                BookCategoryId = book.BookCategoryId,
+                                                                Quantity = book.BookQuantity,
+                                                                Price = book.BookPrice
+                                                            }).OrderBy(book => book.BookId)
                                                         })
                                         });
                                         

@@ -1,6 +1,6 @@
 ﻿namespace BookManagement.Models
 {
-    public class SingleBookModel
+    public class BookModel
     {
         public string Isbn { get; set; }
         public int BookId { get; set; }
